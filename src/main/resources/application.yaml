@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: backend
+  datasource:
+    url: jdbc:postgresql://localhost:5432/user_service
+    username: postgres
+    password: 1234
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+      show-sql: true
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+  cloud:
+    gateway:
+      routes:
+        - id: user_service
+          uri: lb://user_service  # Через Service Discovery (Eureka)
+          predicates:
+            - Path=/api/users/**
+          filters:
+            - StripPrefix=1  # Удаляет /api/users из пути
+            - name: JwtAuthFilter
+
+server:
+  port: 8080
