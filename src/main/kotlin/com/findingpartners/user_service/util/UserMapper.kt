@@ -11,7 +11,6 @@ class UserMapper{
             id = entity.id,
             createdAt = entity.createdAt,
             login = entity.login,
-            password = entity.password,
             email = entity.email,
             name = entity.name,
             surname = entity.surname
