@@ -33,6 +33,16 @@ class UserServiceImpl (
     override fun getById(id: Long): UserResponse {
         return mapper.entityToResponse(dao.findById(id).orElseThrow(){ throw RuntimeException("")})
     }
+
+    override fun searchUsers(query: String): List<UserResponse> {
+        return dao.findByLoginContainingOrNameContainingOrSurnameContaining(query, query, query)
+            .map { mapper.entityToResponse(it) }
+    }
+
+    override fun getByIds(ids: List<Long>): List<UserResponse> {
+        return dao.findAllById(ids).map { mapper.entityToResponse(it) }
+    }
+
     @Transactional
     override fun update (id: Long, request: UserRequest): UserResponse {
        val entity = dao.findById(id).orElseThrow { throw RuntimeException("") }

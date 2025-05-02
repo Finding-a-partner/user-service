@@ -8,7 +8,6 @@ data class UserResponse(
     val createdAt: LocalDateTime,
     val login: String,
     val email: String,
-    val password: String,
     val description: String? = null,
     val name: String,
     val surname: String? = null

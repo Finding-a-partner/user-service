@@ -19,6 +19,12 @@ class UserController (
     @GetMapping("/{id}")
     fun getById(@PathVariable("id") id: Long) = userService.getById(id)
 
+    @GetMapping("/search")
+    fun searchUsers(@RequestParam query: String) = userService.searchUsers(query)
+
+    @PostMapping("/batch")
+    fun getUsersByIds(@RequestBody ids: List<Long>) = userService.getByIds(ids)
+
     @PutMapping("/{id}")
     fun update(@PathVariable("id") id: Long, @RequestBody request: UserRequest) = userService.update(id, request)
 

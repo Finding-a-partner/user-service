@@ -1,6 +1,6 @@
 spring:
   application:
-    name: backend
+    name: user-service
   datasource:
     url: jdbc:postgresql://localhost:5432/user_service
     username: postgres
@@ -13,16 +13,11 @@ spring:
       properties:
         hibernate:
           dialect: org.hibernate.dialect.PostgreSQLDialect
-  cloud:
-    gateway:
-      routes:
-        - id: user_service
-          uri: lb://user_service  # Через Service Discovery (Eureka)
-          predicates:
-            - Path=/api/users/**
-          filters:
-            - StripPrefix=1  # Удаляет /api/users из пути
-            - name: JwtAuthFilter
 
 server:
   port: 8080
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
