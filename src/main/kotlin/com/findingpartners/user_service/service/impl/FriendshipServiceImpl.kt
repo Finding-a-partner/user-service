@@ -82,7 +82,6 @@ class FriendshipServiceImpl(
             }
     }
 
-    @Transactional
     override fun deleteFriend(currentUserId: Long, friendId: Long) {
         val currentUser = userDao.findById(currentUserId)
             .orElseThrow { NotFoundException("Current user not found") }
@@ -90,9 +89,7 @@ class FriendshipServiceImpl(
         val friend = userDao.findById(friendId)
             .orElseThrow { NotFoundException("Friend not found") }
 
-        var friendships = friendshipDao.findByUserIdOrFriendId(currentUserId, friendId)
-        friendships = friendshipDao.findByUserIdOrFriendId(friendId, currentUserId)
-
+        val friendships = friendshipDao.findAllBetweenUsers(currentUserId, friendId)
         if (friendships.isEmpty()) {
             throw NotFoundException("Friendship not found")
         }

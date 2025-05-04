@@ -13,7 +13,7 @@ class UserController (
     @GetMapping
     fun getAll() = userService.getAll()
 
-    @GetMapping("/{login}")
+    @GetMapping("/{login}/login")
     fun getByLogin(@PathVariable("login") login: String) = userService.getByLogin(login)
 
     @GetMapping("/{id}")

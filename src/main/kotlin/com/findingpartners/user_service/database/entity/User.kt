@@ -7,14 +7,19 @@ import jakarta.persistence.*
 class User(
     @Column(nullable = true)
     var description: String? = null,
-    @Column(nullable = false)
+
+    @Column(nullable = false, unique = true)
     var email: String,
-    @Column(nullable = false)
+
+    @Column(nullable = false, unique = true)
     var login: String,
+
     @Column(nullable = false)
     var password: String,
+
     @Column(nullable = false)
     var name: String,
+
     @Column(nullable = true)
     var surname: String
 ) : AbstractEntity()
