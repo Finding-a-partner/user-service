@@ -1,14 +1,12 @@
 package com.findingpartners.user_service.service.impl
 
-
 import com.findingpartners.user_service.database.entity.Friendship
-import com.findingpartners.user_service.database.entity.FriendshipStatus
 import com.findingpartners.user_service.database.repository.FriendshipDao
 import com.findingpartners.user_service.database.repository.UserDao
+import com.findingpartners.user_service.enum.FriendshipStatus
 import com.findingpartners.user_service.model.request.FriendshipRequest
 import com.findingpartners.user_service.model.response.FriendResponse
 import com.findingpartners.user_service.model.response.FriendshipResponse
-import com.findingpartners.user_service.model.response.UserResponse
 import com.findingpartners.user_service.service.FriendshipService
 import com.findingpartners.user_service.util.FriendshipMapper
 import com.findingpartners.user_service.util.UserMapper
@@ -22,7 +20,7 @@ class FriendshipServiceImpl(
     private val friendshipDao: FriendshipDao,
     private val userDao: UserDao,
     val userMapper: UserMapper,
-    val friendMapper: FriendshipMapper
+    val friendMapper: FriendshipMapper,
 ) : FriendshipService {
     // Отправить запрос в друзья
     override fun sendFriendRequest(request: FriendshipRequest): FriendshipResponse {
@@ -43,7 +41,7 @@ class FriendshipServiceImpl(
         val entity = Friendship(
             user = sender,
             friend = receiver,
-            status = FriendshipStatus.PENDING
+            status = FriendshipStatus.PENDING,
         )
         return friendMapper.entityToResponse(friendshipDao.save(entity))
     }
@@ -65,7 +63,7 @@ class FriendshipServiceImpl(
         entity.status = if (request.status == FriendshipStatus.ACCEPTED) FriendshipStatus.ACCEPTED else FriendshipStatus.REJECTED
         return friendMapper.entityToResponse(friendshipDao.save(entity))
     }
-    override fun getUserRequests (userId: Long, status: FriendshipStatus): List<FriendResponse> {
+    override fun getUserRequests(userId: Long, status: FriendshipStatus): List<FriendResponse> {
         val user = userDao.findById(userId).orElseThrow {
             NoSuchElementException("Пользователь с ID $userId не найден")
         }
@@ -75,11 +73,11 @@ class FriendshipServiceImpl(
             val friend = if (friendship.user.id == userId) friendship.friend else friendship.user
 
             FriendResponse(
-                friend = userMapper.entityToResponse(friend),  // маппим User в UserResponse
+                friend = userMapper.entityToResponse(friend), // маппим User в UserResponse
                 status = friendship.status,
-                id = friendship.id
+                id = friendship.id,
             )
-            }
+        }
     }
 
     override fun deleteFriend(currentUserId: Long, friendId: Long) {
@@ -96,5 +94,4 @@ class FriendshipServiceImpl(
 
         friendshipDao.deleteAll(friendships)
     }
-
 }

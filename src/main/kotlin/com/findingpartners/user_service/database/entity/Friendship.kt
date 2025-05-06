@@ -1,10 +1,11 @@
 package com.findingpartners.user_service.database.entity
 
+import com.findingpartners.user_service.enum.FriendshipStatus
 import jakarta.persistence.*
 
 @Entity
 @Table(name = "friendship")
-class Friendship (
+class Friendship(
     @ManyToOne
     @JoinColumn(name = "user_id")
     val user: User,
@@ -16,7 +17,3 @@ class Friendship (
     var status: FriendshipStatus = FriendshipStatus.PENDING,
 
 ) : AbstractEntity()
-
-enum class FriendshipStatus {
-    PENDING, ACCEPTED, REJECTED, BLOCKED
-}

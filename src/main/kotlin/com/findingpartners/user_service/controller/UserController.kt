@@ -2,12 +2,11 @@ package com.findingpartners.user_service.controller
 
 import com.findingpartners.user_service.model.request.UserRequest
 import com.findingpartners.user_service.service.UserService
-import jakarta.servlet.http.HttpServletResponse
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/users")
-class UserController (
+class UserController(
     val userService: UserService,
 ) {
     @GetMapping
