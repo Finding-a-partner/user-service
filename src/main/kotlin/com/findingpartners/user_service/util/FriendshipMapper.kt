@@ -9,9 +9,9 @@ class FriendshipMapper{
     fun entityToResponse (entity: Friendship) : FriendshipResponse {
         return FriendshipResponse(
             id = entity.id ?: throw IllegalArgumentException("Friendship ID cannot be null"),
-            userId = entity.user.id,
-            friendId = entity.friend.id,
-            status = entity.status,
+            userId = entity.user1.id,
+            friendId = entity.user2.id,
+            status = entity.statusForUser1,
         )
     }
 }

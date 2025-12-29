@@ -28,5 +28,8 @@ class FriendshipController(private val friendshipService: FriendshipServiceImpl)
     fun getRequests(
         @PathVariable id: Long,
         @RequestParam(required = false) status: FriendshipStatus,
-    ) = friendshipService.getUserRequests(id, status)
+    ) = friendshipService.getUserRequests(id, status ?: FriendshipStatus.ACCEPTED)
+
+    @GetMapping("/friends/{id}/incoming")
+    fun getIncomingRequests(@PathVariable id: Long) = friendshipService.getIncomingRequests(id)
 }

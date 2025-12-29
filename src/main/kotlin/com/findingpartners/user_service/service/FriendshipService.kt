@@ -9,5 +9,6 @@ interface FriendshipService {
     fun sendFriendRequest(request: FriendshipRequest): FriendshipResponse
     fun respondToFriendRequest(requestId: Long, request: FriendshipRequest): FriendshipResponse
     fun getUserRequests(userId: Long, status: FriendshipStatus): List<FriendResponse>
+    fun getIncomingRequests(userId: Long): List<FriendResponse>
     fun deleteFriend(currentUserId: Long, friendId: Long)
 }
